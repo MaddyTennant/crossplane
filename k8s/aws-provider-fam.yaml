@@ -1,0 +1,7 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-family-aws
+spec:
+  package: registry.nz.thenational.com/apidesign/upbound/provider-family-aws:v1.14.0
+

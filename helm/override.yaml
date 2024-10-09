@@ -1,0 +1,3 @@
+registryCaBundleConfig:
+    name: ca-bundle-config
+    key: ca-bundle

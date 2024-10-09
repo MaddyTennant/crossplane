@@ -1,0 +1,46 @@
+apiVersion: database.aws.crossplane.io/v1beta1
+kind: DBSubnetGroup
+metadata:
+  name: test-subnet-group
+spec:
+  forProvider:
+    description: sample group
+    region: ap-southeast-2
+    subnetIds:
+      - subnet-0eea6777fd39548ec
+      - subnet-06599c1a0d0c99dba
+  providerConfigRef:
+    name: default
+---
+apiVersion: database.aws.crossplane.io/v1beta1
+kind: RDSInstance
+metadata:
+  name: example-rds
+spec:
+  forProvider:
+    allocatedStorage: 20
+    applyModificationsImmediately: true
+    autoMinorVersionUpgrade: true
+    backupRetentionPeriod: 0
+    copyTagsToSnapshot: false
+    dbInstanceClass: db.t3.small
+    deletionProtection: false
+    enableIAMDatabaseAuthentication: false
+    enablePerformanceInsights: false
+    engine: postgres
+    engineVersion: "16.1"
+    licenseModel: postgresql-license
+    masterUsername: popsicle
+    multiAZ: true
+    port: 5432
+    publiclyAccessible: false
+    region: ap-southeast-2
+    storageEncrypted: false
+    storageType: gp2
+    dbSubnetGroupNameRef:
+      name: test-subnet-group
+  providerConfigRef:
+    name: default
+  writeConnectionSecretToRef:
+    name: 66258c8a-24ad-45e6-a79e-1d54c19d908c-postgres
+    namespace: crossplane-system

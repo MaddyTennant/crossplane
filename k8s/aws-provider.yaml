@@ -1,0 +1,30 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws
+spec:
+  package: registry.nz.thenational.com/apidesign/crossplane-contrib/provider-aws:v0.49.2
+  runtimeConfigRef:
+    name: enable-proxy
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+  name: enable-proxy
+spec:
+  deploymentTemplate:
+    spec:
+      selector: {}
+      template:
+        spec:
+          containers:
+          - name: package-runtime
+            args:
+              - --debug
+            env:
+              - name: HTTP_PROXY
+                value: http://proxy.bnz.co.nz:10568
+              - name: HTTPS_PROXY
+                value: http://proxy.bnz.co.nz:10568
+              - name: NO_PROXY
+                value: 172.17.0.1,localhost,10.0.0.0/8,.thenational.com,.thenational.com.au,.bnz.digital,.national.com.au,crl.bnz.co.nz,*.privatelink.australiaeast.azmk8s.io,*.privatelink.australiasoutheast.azmk8s.io,.svc,.svc.cluster,.svc.cluster.local,ap-southeast-2.eks.amazonaws.com,.k8s.bnz

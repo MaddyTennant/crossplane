@@ -1,0 +1,23 @@
+apiVersion: servicecatalog.aws.crossplane.io/v1alpha1
+kind: ProvisionedProduct
+metadata:
+  name: crossplane-service-catalogue
+spec:
+  forProvider:
+    productID: prod-nejx22fac7dd2
+    provisioningArtifactName: "6.2"
+    provisioningParameters:
+      - key: DatabaseName
+        value: myapp
+      - key: MasterUsername
+        value: postgres
+      - key: MasterPassword
+        value: postgres   
+      - key: DatabaseEngineVersion
+        value: "14"
+    region: ap-southeast-2
+  providerConfigRef:
+    name: provider-aws
+  writeConnectionSecretToRef:
+    name: conn-secret-postgres
+    namespace: crossplane-system  
